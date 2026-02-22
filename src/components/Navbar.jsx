@@ -7,17 +7,17 @@ const Navbar = () => {
       <ul>
         <li>
           <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
-            Greeting 1
+            Professional CV
           </NavLink>
         </li>
         <li>
           <NavLink to="/greeting2" className={({ isActive }) => isActive ? 'active' : ''}>
-            2 Greeting
+            Creative CV
           </NavLink>
         </li>
         <li>
           <NavLink to="/greeting3" className={({ isActive }) => isActive ? 'active' : ''}>
-            Greeting 3
+            Minimalist CV
           </NavLink>
         </li>
       </ul>
