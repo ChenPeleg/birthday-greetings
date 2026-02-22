@@ -10,7 +10,7 @@ const Greeting3 = () => {
       <div className="cv3-terminal">
         <header className="cv3-header">
           <h1 className="cv3-name">{name}</h1>
-          <p className="cv3-title">> {title}</p>
+          <p className="cv3-title">&gt; {title}</p>
           <div className="cv3-contact">
             <span>[ EMAIL: {email} ]</span>
             <span>[ PHONE: {phone} ]</span>
@@ -42,7 +42,7 @@ const Greeting3 = () => {
                   <span>[{exp.period}]</span>
                 </div>
                 <p>@ {exp.company}</p>
-                <p>> {exp.description}</p>
+                <p>&gt; {exp.description}</p>
               </div>
             ))}
           </section>
