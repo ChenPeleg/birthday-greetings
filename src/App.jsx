@@ -10,9 +10,9 @@ function App() {
   return (
     <GreetingProvider>
       <Router basename={import.meta.env.BASE_URL}>
-        <div className="flex flex-col min-h-screen text-center w-full m-0 p-0">
+        <div className="relative w-full m-0 p-0">
           <Navbar />
-          <main className="flex-1 p-8">
+          <main>
             <Routes>
               <Route path="/" element={<Greeting1 />} />
               <Route path="/greeting2" element={<Greeting2 />} />
