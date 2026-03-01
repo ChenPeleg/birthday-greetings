@@ -5,6 +5,11 @@ const NAV_LINKS = [
   { to: '/', label: '🎈 Balloons', end: true },
   { to: '/greeting2', label: '🎉 Confetti' },
   { to: '/greeting3', label: '🌅 Sunrise' },
+  { to: '/greeting4', label: '✈️ Plane' },
+  { to: '/greeting5', label: '☁️ Clouds' },
+  { to: '/greeting6', label: '🌃 City Lights' },
+  { to: '/greeting7', label: '🎆 Fireworks' },
+  { to: '/greeting8', label: '🐠 Ocean' },
 ];
 
 const Navbar = () => {
