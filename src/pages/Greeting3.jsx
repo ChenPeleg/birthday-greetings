@@ -1,64 +1,172 @@
-import React, { useContext } from 'react';
-import { GreetingContext } from '../context/GreetingContext';
+import React from 'react';
 
 const Greeting3 = () => {
-  const { name, greeting, title, email, phone, skills, experience, education, text1, text2 } = useContext(GreetingContext);
-
   return (
-    <div className="bg-[#0f172a] text-[#e2e8f0] min-h-screen p-[50px_20px] font-mono text-left">
-      <div className="max-w-[850px] mx-auto bg-[#1e293b] rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border border-[#334155]">
-        <header className="p-5 md:p-10 border-b border-[#334155] bg-[#0f172a]">
-          <h1 className="text-[#10b981] text-[1.8rem] md:text-[2.5rem] m-0 font-bold">{name}</h1>
-          <p className="text-[#38bdf8] text-[1.2rem] mt-[10px] mb-5">&gt; {title}</p>
-          <div className="text-[0.85rem] text-[#94a3b8] flex flex-wrap gap-5">
-            <span>[ EMAIL: {email} ]</span>
-            <span>[ PHONE: {phone} ]</span>
-          </div>
-        </header>
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      minHeight: '100vh',
+      overflow: 'hidden',
+    }}>
+      <style>{`
+        @keyframes nightFadeOut {
+          0%   { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        @keyframes dawnFadeIn {
+          0%   { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes sunRise {
+          0%   { transform: translateX(-50%) translateY(160px); opacity: 0.2; }
+          30%  { opacity: 1; }
+          100% { transform: translateX(-50%) translateY(-10px); opacity: 1; }
+        }
+        @keyframes sunGlow {
+          0%, 100% { box-shadow: 0 0 60px 30px rgba(255,210,0,0.5); }
+          50%       { box-shadow: 0 0 120px 60px rgba(255,210,0,0.8); }
+        }
+        @keyframes starsFadeOut {
+          0%   { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        @keyframes greetingAppear {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes raysPulse {
+          0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+          50%       { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+        }
+        .night-sky  { animation: nightFadeOut 4s ease-out 0.3s forwards; }
+        .dawn-sky   { animation: dawnFadeIn  4s ease-out 0.3s forwards; opacity: 0; }
+        .stars      { animation: starsFadeOut 3s ease-out 0.5s forwards; }
+        .sun        { animation: sunRise 4.5s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s forwards,
+                                 sunGlow 3s ease-in-out 4.8s infinite; }
+        .sun-rays   { animation: raysPulse 3s ease-in-out 4.8s infinite; }
+        .greeting   { animation: greetingAppear 1.2s ease-out 3.8s both; }
+      `}</style>
 
-        <div className="p-5 md:p-10">
-          <div className="text-[#94a3b8] mb-10 leading-relaxed p-5 bg-[#0f172a]/50 rounded border-l-4 border-[#10b981]">
-            <p>// {greeting}</p>
-            <p>{text1}</p>
-            <p>{text2}</p>
-          </div>
+      {/* Dawn gradient sky */}
+      <div
+        className="dawn-sky"
+        style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(180deg, #ff6b35 0%, #ff9a3c 25%, #ffd700 55%, #87ceeb 100%)',
+        }}
+      />
 
-          <section className="mb-[50px]">
-            <span className="text-[#10b981] text-[1.4rem] mb-[25px] font-semibold block">01_SKILLS.sh</span>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-[15px]">
-              {skills.map((skill, index) => (
-                <div key={index} className="text-[#38bdf8]">* {skill}</div>
-              ))}
-            </div>
-          </section>
+      {/* Night sky */}
+      <div
+        className="night-sky"
+        style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(180deg, #05050f 0%, #0d0d2b 50%, #1a1a5e 100%)',
+        }}
+      />
 
-          <section className="mb-[50px]">
-            <span className="text-[#10b981] text-[1.4rem] mb-[25px] font-semibold block">02_EXPERIENCE.exe</span>
-            {experience.map((exp, index) => (
-              <div key={index} className="mb-[35px]">
-                <div className="mb-[10px] flex justify-between items-center flex-wrap gap-2">
-                  <h4 className="m-0 text-[#f8fafc] text-[1.1rem] font-bold">{exp.role}</h4>
-                  <span className="text-[#10b981] text-[0.9rem]">[{exp.period}]</span>
-                </div>
-                <p className="my-[5px] text-[#94a3b8]">@ {exp.company}</p>
-                <p className="my-[5px] text-[#94a3b8]">&gt; {exp.description}</p>
-              </div>
-            ))}
-          </section>
+      {/* Stars */}
+      <div className="stars" style={{ position: 'absolute', inset: 0 }}>
+        {[
+          [12,8],[28,15],[45,5],[60,20],[75,10],[88,18],
+          [20,30],[55,25],[80,35],[35,40],[65,12],[90,5],
+        ].map(([l, t], i) => (
+          <div key={i} style={{
+            position: 'absolute',
+            left: `${l}%`, top: `${t}%`,
+            width: i % 3 === 0 ? '3px' : '2px',
+            height: i % 3 === 0 ? '3px' : '2px',
+            borderRadius: '50%',
+            background: '#fff',
+            boxShadow: '0 0 4px 1px rgba(255,255,255,0.8)',
+          }} />
+        ))}
+      </div>
 
-          <section className="mb-[50px]">
-            <span className="text-[#10b981] text-[1.4rem] mb-[25px] font-semibold block">03_EDUCATION.cfg</span>
-            {education.map((edu, index) => (
-              <div key={index} className="mb-[35px]">
-                <div className="mb-[10px] flex justify-between items-center flex-wrap gap-2">
-                  <h4 className="m-0 text-[#f8fafc] text-[1.1rem] font-bold">{edu.degree}</h4>
-                  <span className="text-[#10b981] text-[0.9rem]">{edu.year}</span>
-                </div>
-                <p className="my-[5px] text-[#94a3b8]">- {edu.school}</p>
-              </div>
-            ))}
-          </section>
-        </div>
+      {/* Sun rays */}
+      <div
+        className="sun-rays"
+        style={{
+          position: 'absolute',
+          bottom: '29%',
+          left: '50%',
+          width: '260px',
+          height: '260px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255,220,60,0.35) 0%, transparent 70%)',
+          transform: 'translateX(-50%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Sun */}
+      <div
+        className="sun"
+        style={{
+          position: 'absolute',
+          bottom: '31%',
+          left: '50%',
+          width: '100px',
+          height: '100px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle at 38% 38%, #fffde7, #ffd700 60%, #ff9800)',
+          transform: 'translateX(-50%) translateY(160px)',
+          opacity: 0,
+        }}
+      />
+
+      {/* Ground / hills */}
+      <div style={{
+        position: 'absolute', bottom: 0, width: '100%', height: '32%',
+        background: 'linear-gradient(180deg, #2e8b2e 0%, #1a6b1a 100%)',
+        borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
+      }} />
+
+      {/* Secondary hill */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: '-5%', width: '45%', height: '22%',
+        background: 'linear-gradient(180deg, #246824 0%, #1a5c1a 100%)',
+        borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
+      }} />
+      <div style={{
+        position: 'absolute', bottom: 0, right: '-5%', width: '45%', height: '22%',
+        background: 'linear-gradient(180deg, #246824 0%, #1a5c1a 100%)',
+        borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
+      }} />
+
+      {/* Greeting text */}
+      <div
+        className="greeting"
+        style={{
+          position: 'absolute',
+          top: '8%',
+          width: '100%',
+          textAlign: 'center',
+          padding: '20px',
+          zIndex: 10,
+          opacity: 0,
+        }}
+      >
+        <div style={{ fontSize: '3rem', marginBottom: '8px' }}>🌅</div>
+        <h1 style={{
+          fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+          color: '#fff',
+          fontFamily: 'Georgia, serif',
+          margin: '0 0 16px',
+          lineHeight: 1.2,
+          textShadow: '2px 2px 12px rgba(0,0,0,0.5)',
+        }}>
+          Happy Birthday!
+        </h1>
+        <p style={{
+          fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+          color: '#fff',
+          margin: 0,
+          lineHeight: 1.7,
+          textShadow: '1px 1px 6px rgba(0,0,0,0.5)',
+        }}>
+          A new day rises, just for you — may it shine as brilliantly as you do! ☀️
+        </p>
       </div>
     </div>
   );

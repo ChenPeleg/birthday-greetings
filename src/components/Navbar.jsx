@@ -10,17 +10,17 @@ const Navbar = () => {
       <ul className="list-none p-0 m-0 flex flex-col md:flex-row justify-center gap-4 md:gap-8">
         <li>
           <NavLink to="/" end className={linkClass}>
-            Professional CV
+            🎈 Balloons
           </NavLink>
         </li>
         <li>
           <NavLink to="/greeting2" className={linkClass}>
-            Creative CV
+            🎉 Confetti
           </NavLink>
         </li>
         <li>
           <NavLink to="/greeting3" className={linkClass}>
-            Minimalist CV
+            🌅 Sunrise
           </NavLink>
         </li>
       </ul>

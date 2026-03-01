@@ -1,70 +1,102 @@
-import React, { useContext } from 'react';
-import { GreetingContext } from '../context/GreetingContext';
+import React from 'react';
+
+const BALLOONS = [
+  { id: 0,  color: '#ff6b6b', x: 5,  duration: 5.0, delay: -1.0 },
+  { id: 1,  color: '#ffd93d', x: 13, duration: 6.5, delay: -4.0 },
+  { id: 2,  color: '#6bcb77', x: 22, duration: 5.5, delay: -2.5 },
+  { id: 3,  color: '#4d96ff', x: 31, duration: 7.0, delay: -6.0 },
+  { id: 4,  color: '#ff6bcd', x: 40, duration: 4.8, delay: -0.5 },
+  { id: 5,  color: '#ff9f43', x: 50, duration: 6.0, delay: -3.5 },
+  { id: 6,  color: '#a29bfe', x: 59, duration: 5.2, delay: -7.0 },
+  { id: 7,  color: '#00d2ff', x: 68, duration: 6.8, delay: -1.8 },
+  { id: 8,  color: '#fd79a8', x: 77, duration: 5.7, delay: -5.0 },
+  { id: 9,  color: '#55efc4', x: 86, duration: 4.5, delay: -2.0 },
+  { id: 10, color: '#fdcb6e', x: 93, duration: 6.2, delay: -4.5 },
+];
 
 const Greeting1 = () => {
-  const { name, greeting, imageUrl, title, email, phone, address, skills, experience, education, text1, text2 } = useContext(GreetingContext);
-
   return (
-    <div className="max-w-[1000px] mx-auto bg-white text-[#333] shadow-[0_0_20px_rgba(0,0,0,0.1)] flex flex-col md:flex-row min-h-[1000px] text-left font-sans">
-      <aside className="w-full md:w-[300px] bg-[#2c3e50] text-[#ecf0f1] p-[40px] px-[30px]">
-        <img src={imageUrl} alt={name} className="w-[150px] h-[150px] rounded-full border-[5px] border-[#34495e] mx-auto mb-[30px] object-cover" />
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      minHeight: '100vh',
+      background: 'linear-gradient(180deg, #87ceeb 0%, #c8e6ff 60%, #e8f4ff 100%)',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <style>{`
+        @keyframes balloonFloat {
+          0%   { transform: translateY(110vh) rotate(-4deg); }
+          25%  { transform: translateY(75vh)  rotate(4deg);  }
+          50%  { transform: translateY(40vh)  rotate(-3deg); }
+          75%  { transform: translateY(10vh)  rotate(3deg);  }
+          100% { transform: translateY(-20vh) rotate(-4deg); }
+        }
+        @keyframes birthdayPulse {
+          0%, 100% { transform: scale(1);    text-shadow: 0 0 20px rgba(255,71,87,0.4); }
+          50%       { transform: scale(1.04); text-shadow: 0 0 40px rgba(255,71,87,0.7); }
+        }
+        .balloon-item {
+          position: absolute;
+          bottom: 0;
+          animation: balloonFloat var(--dur) ease-in-out var(--del) infinite;
+          will-change: transform;
+        }
+        .birthday-card {
+          animation: birthdayPulse 2.5s ease-in-out infinite;
+        }
+      `}</style>
 
-        <div className="mb-10">
-          <div className="mb-[10px] text-[0.9rem] break-all">{email}</div>
-          <div className="mb-[10px] text-[0.9rem] break-all">{phone}</div>
-          <div className="mb-[10px] text-[0.9rem] break-all">{address}</div>
+      {BALLOONS.map(b => (
+        <div
+          key={b.id}
+          className="balloon-item"
+          style={{ left: `${b.x}%`, '--dur': `${b.duration}s`, '--del': `${b.delay}s` }}
+        >
+          <svg width="56" height="88" viewBox="0 0 56 88" fill="none">
+            <ellipse cx="28" cy="30" rx="26" ry="28" fill={b.color} />
+            <ellipse cx="20" cy="18" rx="8" ry="6" fill="rgba(255,255,255,0.3)" />
+            <path d="M28 58 Q26 67 30 75 Q27 80 28 88" stroke="#666" strokeWidth="1.5" fill="none" />
+          </svg>
         </div>
+      ))}
 
-        <div className="mb-10">
-          <h3 className="border-b border-[#5d6d7e] pb-[10px] mb-[15px] uppercase text-[1.1rem] tracking-[1px]">Skills</h3>
-          <ul className="list-none p-0">
-            {skills.map((skill, index) => (
-              <li key={index} className="mb-2 text-[0.95rem]">{skill}</li>
-            ))}
-          </ul>
-        </div>
-      </aside>
-
-      <main className="flex-1 p-[30px] md:p-[50px]">
-        <header className="mb-10 border-b-2 border-[#eee] pb-5">
-          <h1 className="text-[3rem] m-0 text-[#2c3e50] font-bold leading-[1.1]">{name}</h1>
-          <p className="text-[1.5rem] text-[#7f8c8d] mt-[5px] m-0">{title}</p>
-        </header>
-
-        <section className="mb-10">
-          <h2 className="text-[#2c3e50] uppercase text-[1.4rem] mb-5 border-l-[5px] border-[#2c3e50] pl-[15px]">Professional Summary</h2>
-          <p>{greeting}</p>
-          <p>{text1}</p>
-          <p>{text2}</p>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-[#2c3e50] uppercase text-[1.4rem] mb-5 border-l-[5px] border-[#2c3e50] pl-[15px]">Experience</h2>
-          {experience.map((exp, index) => (
-            <div key={index} className="mb-[25px]">
-              <div className="flex justify-between font-bold mb-[5px] text-[#34495e]">
-                <span>{exp.role}</span>
-                <span>{exp.period}</span>
-              </div>
-              <div className="text-[#7f8c8d] mb-[10px]">{exp.company}</div>
-              <p>{exp.description}</p>
-            </div>
-          ))}
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-[#2c3e50] uppercase text-[1.4rem] mb-5 border-l-[5px] border-[#2c3e50] pl-[15px]">Education</h2>
-          {education.map((edu, index) => (
-            <div key={index} className="mb-[25px]">
-              <div className="flex justify-between font-bold mb-[5px] text-[#34495e]">
-                <span>{edu.degree}</span>
-                <span>{edu.year}</span>
-              </div>
-              <div className="text-[#7f8c8d]">{edu.school}</div>
-            </div>
-          ))}
-        </section>
-      </main>
+      <div
+        className="birthday-card"
+        style={{
+          position: 'relative',
+          zIndex: 10,
+          textAlign: 'center',
+          padding: '40px 48px',
+          background: 'rgba(255,255,255,0.45)',
+          borderRadius: '24px',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+          maxWidth: '580px',
+          margin: '20px',
+        }}
+      >
+        <div style={{ fontSize: '3rem', marginBottom: '8px' }}>🎈</div>
+        <h1 style={{
+          fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+          color: '#ff4757',
+          fontFamily: 'Georgia, serif',
+          margin: '0 0 16px',
+          lineHeight: 1.2,
+        }}>
+          Happy Birthday!
+        </h1>
+        <p style={{
+          fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+          color: '#444',
+          margin: 0,
+          lineHeight: 1.7,
+        }}>
+          Wishing you a day as bright and colourful as these balloons. May every moment lift your spirits sky-high! 🎈
+        </p>
+      </div>
     </div>
   );
 };
