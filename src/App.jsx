@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Greeting1 from './pages/Greeting1';
 import Greeting2 from './pages/Greeting2';
@@ -9,7 +9,7 @@ import { GreetingProvider } from './context/GreetingProvider';
 function App() {
   return (
     <GreetingProvider>
-      <Router basename={import.meta.env.BASE_URL}>
+      <Router>
         <div className="relative w-full m-0 p-0">
           <Navbar />
           <main>
