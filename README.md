@@ -1,16 +1,67 @@
-# React + Vite
+# Birthday Greetings 🎂
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A template site for creating and sharing beautiful birthday greeting pages.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project provides a collection of ready-made birthday greeting pages that you can use as a starting point for sending personalized birthday wishes. It includes 8 different greeting styles, a shared context for customizing the recipient's name and message, and a navigation bar to browse between greetings.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 8 unique birthday greeting page designs
+- Shared greeting context (recipient name, message, etc.) across all pages
+- Built with [React](https://react.dev/) and [Vite](https://vite.dev/) for fast development
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Client-side routing via [React Router](https://reactrouter.com/)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser to view the app.
+
+### Build
+
+```bash
+npm run build
+```
+
+### Preview production build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Shared UI components (e.g. Navbar)
+├── context/        # GreetingProvider – shared greeting state
+├── pages/          # Individual greeting pages (Greeting1 – Greeting8)
+├── App.jsx         # Root component with routing
+└── main.jsx        # Application entry point
+```
+
+## Customization
+
+Update the greeting details (recipient name, message, etc.) through the `GreetingProvider` context found in `src/context/`. Each page in `src/pages/` can be further customized to match your preferred style.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
