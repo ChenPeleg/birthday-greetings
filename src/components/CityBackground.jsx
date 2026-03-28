@@ -45,38 +45,38 @@ const CityBackground = () => {
       offset: i * 0.4,
     }));
 
-    let frame = 0;
+    let animationFrame = 0;
     let animId;
 
     const draw = () => {
-      const W = canvas.width;
-      const H = canvas.height;
-      frame++;
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      animationFrame++;
 
-      ctx.clearRect(0, 0, W, H);
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       // Draw buildings
-      const scaleX = W / 760;
-      BUILDINGS.forEach((b, bi) => {
-        const bx = b.x * scaleX;
-        const bw = b.w * scaleX;
-        const bh = b.h * (H / 400);
+      const scaleX = canvasWidth / 760;
+      BUILDINGS.forEach((building, buildingIndex) => {
+        const buildingX = building.x * scaleX;
+        const buildingWidth = building.w * scaleX;
+        const buildingHeight = building.h * (canvasHeight / 400);
 
-        ctx.fillStyle = b.color;
-        ctx.fillRect(bx, H - bh, bw, bh);
+        ctx.fillStyle = building.color;
+        ctx.fillRect(buildingX, canvasHeight - buildingHeight, buildingWidth, buildingHeight);
 
         // Draw windows
-        b.windows.forEach(([ wx, wy ], wi) => {
-          const lit = Math.sin(frame * 0.01 + bi * 1.7 + wi * 0.9) > -0.3;
+        building.windows.forEach(([ windowX, windowY ], windowIndex) => {
+          const lit = Math.sin(animationFrame * 0.01 + buildingIndex * 1.7 + windowIndex * 0.9) > -0.3;
           if (lit) {
-            const wColor = seededColor(bi * 13 + wi * 7);
-            ctx.fillStyle = wColor;
-            ctx.globalAlpha = 0.6 + 0.4 * Math.abs(Math.sin(frame * 0.008 + bi + wi));
+            const windowColor = seededColor(buildingIndex * 13 + windowIndex * 7);
+            ctx.fillStyle = windowColor;
+            ctx.globalAlpha = 0.6 + 0.4 * Math.abs(Math.sin(animationFrame * 0.008 + buildingIndex + windowIndex));
             ctx.fillRect(
-              bx + wx * scaleX,
-              H - bh + wy * (H / 400),
+              buildingX + windowX * scaleX,
+              canvasHeight - buildingHeight + windowY * (canvasHeight / 400),
               8 * scaleX,
-              10 * (H / 400),
+              10 * (canvasHeight / 400),
             );
             ctx.globalAlpha = 1;
           }
@@ -84,22 +84,22 @@ const CityBackground = () => {
       });
 
       // Stars
-      particles.forEach(p => {
-        const twinkle = 0.4 + 0.6 * Math.abs(Math.sin(frame * p.speed + p.offset));
+      particles.forEach(particle => {
+        const twinkle = 0.4 + 0.6 * Math.abs(Math.sin(animationFrame * particle.speed + particle.offset));
         ctx.beginPath();
-        ctx.arc(p.x * scaleX, p.y * (H / 400), p.r, 0, Math.PI * 2);
+        ctx.arc(particle.x * scaleX, particle.y * (canvasHeight / 400), particle.r, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
-        ctx.globalAlpha = p.alpha * twinkle;
+        ctx.globalAlpha = particle.alpha * twinkle;
         ctx.fill();
         ctx.globalAlpha = 1;
       });
 
       // Ground / street glow
-      const groundGrad = ctx.createLinearGradient(0, H - 40, 0, H);
+      const groundGrad = ctx.createLinearGradient(0, canvasHeight - 40, 0, canvasHeight);
       groundGrad.addColorStop(0, 'rgba(30,20,50,0.8)');
       groundGrad.addColorStop(1, '#0a0a1a');
       ctx.fillStyle = groundGrad;
-      ctx.fillRect(0, H - 40, W, 40);
+      ctx.fillRect(0, canvasHeight - 40, canvasWidth, 40);
 
       animId = requestAnimationFrame(draw);
     };
