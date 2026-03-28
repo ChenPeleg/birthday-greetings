@@ -5,11 +5,11 @@ const FISH_COLORS = [
   '#ff9f43', '#fd79a8', '#a29bfe', '#00d2ff',
 ];
 
-function createFish(i, W, H) {
+function createFish(i, canvasWidth, canvasHeight) {
   const dir = i % 2 === 0 ? 1 : -1;
   return {
-    x: dir === 1 ? -60 : W + 60,
-    y: H * 0.35 + (i * 71) % (H * 0.55),
+    x: dir === 1 ? -60 : canvasWidth + 60,
+    y: canvasHeight * 0.35 + (i * 71) % (canvasHeight * 0.55),
     dir,
     speed: 0.7 + (i % 5) * 0.25,
     color: FISH_COLORS[i % FISH_COLORS.length],
@@ -19,10 +19,10 @@ function createFish(i, W, H) {
   };
 }
 
-function createBubble(i, W, H) {
+function createBubble(i, canvasWidth, canvasHeight) {
   return {
-    x: (i * 137) % W,
-    y: H + 20,
+    x: (i * 137) % canvasWidth,
+    y: canvasHeight + 20,
     r: 3 + (i % 5) * 3,
     speed: 0.5 + (i % 4) * 0.3,
     alpha: 0.3 + (i % 3) * 0.15,
@@ -46,43 +46,43 @@ const OceanCanvas = () => {
     const fishList = Array.from({ length: 10 }, (_, i) => createFish(i, canvas.width, canvas.height));
     const bubbles  = Array.from({ length: 20 }, (_, i) => createBubble(i, canvas.width, canvas.height));
 
-    let frame = 0;
+    let animationFrame = 0;
     let animId;
 
-    const drawFish = (f) => {
+    const drawFish = (fish) => {
       ctx.save();
-      ctx.translate(f.x, f.y);
-      if (f.dir === -1) ctx.scale(-1, 1);
+      ctx.translate(fish.x, fish.y);
+      if (fish.dir === -1) ctx.scale(-1, 1);
 
-      const s = f.size;
+      const size = fish.size;
       // Body
       ctx.beginPath();
-      ctx.ellipse(0, 0, s, s * 0.55, 0, 0, Math.PI * 2);
-      ctx.fillStyle = f.color;
+      ctx.ellipse(0, 0, size, size * 0.55, 0, 0, Math.PI * 2);
+      ctx.fillStyle = fish.color;
       ctx.fill();
 
       // Tail
       ctx.beginPath();
-      ctx.moveTo(-s, 0);
-      ctx.lineTo(-s - s * 0.8, -s * 0.5);
-      ctx.lineTo(-s - s * 0.8,  s * 0.5);
+      ctx.moveTo(-size, 0);
+      ctx.lineTo(-size - size * 0.8, -size * 0.5);
+      ctx.lineTo(-size - size * 0.8,  size * 0.5);
       ctx.closePath();
-      ctx.fillStyle = f.color;
+      ctx.fillStyle = fish.color;
       ctx.fill();
 
       // Eye
       ctx.beginPath();
-      ctx.arc(s * 0.5, -s * 0.15, s * 0.15, 0, Math.PI * 2);
+      ctx.arc(size * 0.5, -size * 0.15, size * 0.15, 0, Math.PI * 2);
       ctx.fillStyle = '#fff';
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(s * 0.52, -s * 0.15, s * 0.08, 0, Math.PI * 2);
+      ctx.arc(size * 0.52, -size * 0.15, size * 0.08, 0, Math.PI * 2);
       ctx.fillStyle = '#222';
       ctx.fill();
 
       // Highlight
       ctx.beginPath();
-      ctx.ellipse(-s * 0.1, -s * 0.2, s * 0.25, s * 0.12, -0.4, 0, Math.PI * 2);
+      ctx.ellipse(-size * 0.1, -size * 0.2, size * 0.25, size * 0.12, -0.4, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,255,255,0.25)';
       ctx.fill();
 
@@ -90,78 +90,78 @@ const OceanCanvas = () => {
     };
 
     const draw = () => {
-      frame++;
-      const W = canvas.width;
-      const H = canvas.height;
+      animationFrame++;
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
 
       // Background gradient
-      const grad = ctx.createLinearGradient(0, 0, 0, H);
+      const grad = ctx.createLinearGradient(0, 0, 0, canvasHeight);
       grad.addColorStop(0, '#0077b6');
       grad.addColorStop(0.5, '#0096c7');
       grad.addColorStop(1, '#023e8a');
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
       // Caustic light rays
       for (let i = 0; i < 6; i++) {
-        const rx = W * (0.1 + i * 0.16);
-        const rg = ctx.createLinearGradient(rx, 0, rx + 40, H * 0.6);
-        rg.addColorStop(0, 'rgba(100,200,255,0.12)');
-        rg.addColorStop(1, 'rgba(100,200,255,0)');
+        const rayX = canvasWidth * (0.1 + i * 0.16);
+        const rayGradient = ctx.createLinearGradient(rayX, 0, rayX + 40, canvasHeight * 0.6);
+        rayGradient.addColorStop(0, 'rgba(100,200,255,0.12)');
+        rayGradient.addColorStop(1, 'rgba(100,200,255,0)');
         ctx.beginPath();
-        ctx.moveTo(rx, 0);
-        ctx.lineTo(rx + 40, H * 0.6);
-        ctx.lineTo(rx - 10, H * 0.6);
+        ctx.moveTo(rayX, 0);
+        ctx.lineTo(rayX + 40, canvasHeight * 0.6);
+        ctx.lineTo(rayX - 10, canvasHeight * 0.6);
         ctx.closePath();
-        ctx.fillStyle = rg;
+        ctx.fillStyle = rayGradient;
         ctx.fill();
       }
 
       // Bubbles
-      bubbles.forEach(b => {
-        b.y -= b.speed;
-        b.x += Math.sin(frame * 0.02 + b.y * 0.02) * 0.5;
-        if (b.y < -b.r * 2) {
-          b.y = H + b.r;
-          b.x = Math.random() * W;
+      bubbles.forEach(bubble => {
+        bubble.y -= bubble.speed;
+        bubble.x += Math.sin(animationFrame * 0.02 + bubble.y * 0.02) * 0.5;
+        if (bubble.y < -bubble.r * 2) {
+          bubble.y = canvasHeight + bubble.r;
+          bubble.x = Math.random() * canvasWidth;
         }
         ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(150,220,255,${b.alpha})`;
+        ctx.arc(bubble.x, bubble.y, bubble.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(150,220,255,${bubble.alpha})`;
         ctx.lineWidth = 1.5;
         ctx.stroke();
       });
 
       // Fish
-      fishList.forEach(f => {
-        f.x += f.dir * f.speed;
-        f.y += Math.sin(frame * 0.025 + f.wave) * 0.4;
+      fishList.forEach(fish => {
+        fish.x += fish.dir * fish.speed;
+        fish.y += Math.sin(animationFrame * 0.025 + fish.wave) * 0.4;
 
         // Reset when off-screen
-        if (f.dir === 1 && f.x > W + 80) {
-          f.x = -60;
-          f.y = H * 0.35 + Math.random() * (H * 0.5);
+        if (fish.dir === 1 && fish.x > canvasWidth + 80) {
+          fish.x = -60;
+          fish.y = canvasHeight * 0.35 + Math.random() * (canvasHeight * 0.5);
         }
-        if (f.dir === -1 && f.x < -80) {
-          f.x = W + 60;
-          f.y = H * 0.35 + Math.random() * (H * 0.5);
+        if (fish.dir === -1 && fish.x < -80) {
+          fish.x = canvasWidth + 60;
+          fish.y = canvasHeight * 0.35 + Math.random() * (canvasHeight * 0.5);
         }
 
-        drawFish(f);
+        drawFish(fish);
       });
 
       // Seabed
-      const bedGrad = ctx.createLinearGradient(0, H - 60, 0, H);
+      const bedGrad = ctx.createLinearGradient(0, canvasHeight - 60, 0, canvasHeight);
       bedGrad.addColorStop(0, '#d4a35a');
       bedGrad.addColorStop(1, '#c49040');
       ctx.fillStyle = bedGrad;
       ctx.beginPath();
-      ctx.moveTo(0, H);
-      for (let x = 0; x <= W; x += 40) {
-        const bump = Math.sin((x + frame * 0.3) * 0.05) * 10;
-        ctx.lineTo(x, H - 50 + bump);
+      ctx.moveTo(0, canvasHeight);
+      for (let x = 0; x <= canvasWidth; x += 40) {
+        const bump = Math.sin((x + animationFrame * 0.3) * 0.05) * 10;
+        ctx.lineTo(x, canvasHeight - 50 + bump);
       }
-      ctx.lineTo(W, H);
+      ctx.lineTo(canvasWidth, canvasHeight);
       ctx.closePath();
       ctx.fill();
 

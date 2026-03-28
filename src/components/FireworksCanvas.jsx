@@ -53,67 +53,67 @@ const FireworksCanvas = () => {
     window.addEventListener('resize', resize);
 
     let shells = [];
-    let frame = 0;
+    let animationFrame = 0;
     let animId;
 
     const draw = () => {
-      frame++;
-      const W = canvas.width;
-      const H = canvas.height;
+      animationFrame++;
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
 
       // Launch a new shell every ~45 frames
-      if (frame % 45 === 0 || shells.length === 0) {
+      if (animationFrame % 45 === 0 || shells.length === 0) {
         shells.push(createShell(canvas));
       }
 
       ctx.fillStyle = 'rgba(5,5,20,0.25)';
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-      shells = shells.filter(s => {
-        if (!s.exploded) {
+      shells = shells.filter(shell => {
+        if (!shell.exploded) {
           // Update shell position
-          s.trail.push({ x: s.x, y: s.y });
-          if (s.trail.length > 8) s.trail.shift();
+          shell.trail.push({ x: shell.x, y: shell.y });
+          if (shell.trail.length > 8) shell.trail.shift();
 
-          s.vy += 0.18; // gravity
-          s.x += s.vx;
-          s.y += s.vy;
+          shell.vy += 0.18; // gravity
+          shell.x += shell.vx;
+          shell.y += shell.vy;
 
           // Draw trail
-          s.trail.forEach((pt, i) => {
+          shell.trail.forEach((pt, i) => {
             ctx.beginPath();
             ctx.arc(pt.x, pt.y, 1.5, 0, Math.PI * 2);
-            ctx.fillStyle = s.color;
-            ctx.globalAlpha = (i / s.trail.length) * 0.5;
+            ctx.fillStyle = shell.color;
+            ctx.globalAlpha = (i / shell.trail.length) * 0.5;
             ctx.fill();
           });
           ctx.globalAlpha = 1;
 
           // Explode when going up slows
-          if (s.vy >= -1) explode(s);
+          if (shell.vy >= -1) explode(shell);
           return true;
         }
 
         // Update particles
-        s.particles.forEach(p => {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.08;
-          p.vx *= 0.97;
-          p.alpha -= 0.018;
+        shell.particles.forEach(particle => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.vy += 0.08;
+          particle.vx *= 0.97;
+          particle.alpha -= 0.018;
 
-          if (p.alpha > 0) {
+          if (particle.alpha > 0) {
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.globalAlpha = p.alpha;
+            ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+            ctx.fillStyle = particle.color;
+            ctx.globalAlpha = particle.alpha;
             ctx.fill();
           }
         });
         ctx.globalAlpha = 1;
 
-        s.particles = s.particles.filter(p => p.alpha > 0);
-        return s.particles.length > 0;
+        shell.particles = shell.particles.filter(p => p.alpha > 0);
+        return shell.particles.length > 0;
       });
 
       animId = requestAnimationFrame(draw);
