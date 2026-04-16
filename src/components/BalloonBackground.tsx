@@ -1,18 +1,18 @@
-import React from 'react';
+import { CSSProperties } from 'react'
 
 const BALLOONS = [
-  { id: 0,  color: '#ff6b6b', x: 5,  duration: 5.0, delay: -1.0 },
-  { id: 1,  color: '#ffd93d', x: 13, duration: 6.5, delay: -4.0 },
-  { id: 2,  color: '#6bcb77', x: 22, duration: 5.5, delay: -2.5 },
-  { id: 3,  color: '#4d96ff', x: 31, duration: 7.0, delay: -6.0 },
-  { id: 4,  color: '#ff6bcd', x: 40, duration: 4.8, delay: -0.5 },
-  { id: 5,  color: '#ff9f43', x: 50, duration: 6.0, delay: -3.5 },
-  { id: 6,  color: '#a29bfe', x: 59, duration: 5.2, delay: -7.0 },
-  { id: 7,  color: '#00d2ff', x: 68, duration: 6.8, delay: -1.8 },
-  { id: 8,  color: '#fd79a8', x: 77, duration: 5.7, delay: -5.0 },
-  { id: 9,  color: '#55efc4', x: 86, duration: 4.5, delay: -2.0 },
+  { id: 0, color: '#ff6b6b', x: 5, duration: 5.0, delay: -1.0 },
+  { id: 1, color: '#ffd93d', x: 13, duration: 6.5, delay: -4.0 },
+  { id: 2, color: '#6bcb77', x: 22, duration: 5.5, delay: -2.5 },
+  { id: 3, color: '#4d96ff', x: 31, duration: 7.0, delay: -6.0 },
+  { id: 4, color: '#ff6bcd', x: 40, duration: 4.8, delay: -0.5 },
+  { id: 5, color: '#ff9f43', x: 50, duration: 6.0, delay: -3.5 },
+  { id: 6, color: '#a29bfe', x: 59, duration: 5.2, delay: -7.0 },
+  { id: 7, color: '#00d2ff', x: 68, duration: 6.8, delay: -1.8 },
+  { id: 8, color: '#fd79a8', x: 77, duration: 5.7, delay: -5.0 },
+  { id: 9, color: '#55efc4', x: 86, duration: 4.5, delay: -2.0 },
   { id: 10, color: '#fdcb6e', x: 93, duration: 6.2, delay: -4.5 },
-];
+]
 
 const BalloonBackground = () => (
   <>
@@ -39,11 +39,17 @@ const BalloonBackground = () => (
       }
     `}</style>
 
-    {BALLOONS.map(b => (
+    {BALLOONS.map((b) => (
       <div
         key={b.id}
         className="balloon-item"
-        style={{ left: `${b.x}%`, '--dur': `${b.duration}s`, '--del': `${b.delay}s` }}
+        style={
+          {
+            left: `${b.x}%`,
+            '--dur': `${b.duration}s`,
+            '--del': `${b.delay}s`,
+          } as CSSProperties
+        }
       >
         <svg width="56" height="88" viewBox="0 0 56 88" fill="none">
           <ellipse cx="28" cy="30" rx="26" ry="28" fill={b.color} />
@@ -53,6 +59,6 @@ const BalloonBackground = () => (
       </div>
     ))}
   </>
-);
+)
 
-export default BalloonBackground;
+export default BalloonBackground

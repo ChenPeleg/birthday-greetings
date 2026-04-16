@@ -1,9 +1,17 @@
-import React from 'react';
-
 const STARS = [
-  [12,8],[28,15],[45,5],[60,20],[75,10],[88,18],
-  [20,30],[55,25],[80,35],[35,40],[65,12],[90,5],
-];
+  [12, 8],
+  [28, 15],
+  [45, 5],
+  [60, 20],
+  [75, 10],
+  [88, 18],
+  [20, 30],
+  [55, 25],
+  [80, 35],
+  [35, 40],
+  [65, 12],
+  [90, 5],
+]
 
 const SunriseBackground = () => (
   <>
@@ -46,40 +54,42 @@ const SunriseBackground = () => (
       .greeting   { animation: greetingAppear 1.2s ease-out 3.8s both; }
     `}</style>
 
-    {/* Dawn gradient sky */}
     <div
       className="dawn-sky"
       style={{
-        position: 'absolute', inset: 0,
+        position: 'absolute',
+        inset: 0,
         background: 'linear-gradient(180deg, #ff6b35 0%, #ff9a3c 25%, #ffd700 55%, #87ceeb 100%)',
       }}
     />
 
-    {/* Night sky */}
     <div
       className="night-sky"
       style={{
-        position: 'absolute', inset: 0,
+        position: 'absolute',
+        inset: 0,
         background: 'linear-gradient(180deg, #05050f 0%, #0d0d2b 50%, #1a1a5e 100%)',
       }}
     />
 
-    {/* Stars */}
     <div className="stars" style={{ position: 'absolute', inset: 0 }}>
       {STARS.map(([l, t], i) => (
-        <div key={i} style={{
-          position: 'absolute',
-          left: `${l}%`, top: `${t}%`,
-          width: i % 3 === 0 ? '3px' : '2px',
-          height: i % 3 === 0 ? '3px' : '2px',
-          borderRadius: '50%',
-          background: '#fff',
-          boxShadow: '0 0 4px 1px rgba(255,255,255,0.8)',
-        }} />
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            left: `${l}%`,
+            top: `${t}%`,
+            width: i % 3 === 0 ? '3px' : '2px',
+            height: i % 3 === 0 ? '3px' : '2px',
+            borderRadius: '50%',
+            background: '#fff',
+            boxShadow: '0 0 4px 1px rgba(255,255,255,0.8)',
+          }}
+        />
       ))}
     </div>
 
-    {/* Sun rays */}
     <div
       className="sun-rays"
       style={{
@@ -95,7 +105,6 @@ const SunriseBackground = () => (
       }}
     />
 
-    {/* Sun */}
     <div
       className="sun"
       style={{
@@ -111,27 +120,41 @@ const SunriseBackground = () => (
       }}
     />
 
-    {/* Ground / hills */}
-    <div style={{
-      position: 'absolute', bottom: 0, width: '100%', height: '32%',
-      background: 'linear-gradient(180deg, #2e8b2e 0%, #1a6b1a 100%)',
-      borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
-    }} />
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: '32%',
+        background: 'linear-gradient(180deg, #2e8b2e 0%, #1a6b1a 100%)',
+        borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
+      }}
+    />
 
-    {/* Secondary hill (left) */}
-    <div style={{
-      position: 'absolute', bottom: 0, left: '-5%', width: '45%', height: '22%',
-      background: 'linear-gradient(180deg, #246824 0%, #1a5c1a 100%)',
-      borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
-    }} />
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        left: '-5%',
+        width: '45%',
+        height: '22%',
+        background: 'linear-gradient(180deg, #246824 0%, #1a5c1a 100%)',
+        borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
+      }}
+    />
 
-    {/* Secondary hill (right) */}
-    <div style={{
-      position: 'absolute', bottom: 0, right: '-5%', width: '45%', height: '22%',
-      background: 'linear-gradient(180deg, #246824 0%, #1a5c1a 100%)',
-      borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
-    }} />
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        right: '-5%',
+        width: '45%',
+        height: '22%',
+        background: 'linear-gradient(180deg, #246824 0%, #1a5c1a 100%)',
+        borderRadius: '60% 60% 0 0 / 30% 30% 0 0',
+      }}
+    />
   </>
-);
+)
 
-export default SunriseBackground;
+export default SunriseBackground

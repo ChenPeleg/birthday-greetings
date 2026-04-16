@@ -1,11 +1,11 @@
-import React from 'react';
+import { CSSProperties } from 'react'
 
 const CLOUDS_BG = [
   { id: 0, x: 10, y: 15, scale: 1.1, dur: 28, del: 0 },
   { id: 1, x: 40, y: 30, scale: 0.8, dur: 22, del: -8 },
   { id: 2, x: 65, y: 12, scale: 1.3, dur: 34, del: -15 },
   { id: 3, x: 80, y: 40, scale: 0.7, dur: 26, del: -5 },
-];
+]
 
 const PlaneBackground = () => (
   <>
@@ -49,18 +49,19 @@ const PlaneBackground = () => (
       }
     `}</style>
 
-    {/* Background clouds */}
-    {CLOUDS_BG.map(c => (
+    {CLOUDS_BG.map((c) => (
       <div
         key={c.id}
         className="cloud-bg"
-        style={{
-          left: `${c.x}%`,
-          top: `${c.y}%`,
-          '--dur': `${c.dur}s`,
-          '--del': `${c.del}s`,
-          transform: `scale(${c.scale})`,
-        }}
+        style={
+          {
+            left: `${c.x}%`,
+            top: `${c.y}%`,
+            '--dur': `${c.dur}s`,
+            '--del': `${c.del}s`,
+            transform: `scale(${c.scale})`,
+          } as CSSProperties
+        }
       >
         <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
           <ellipse cx="60" cy="40" rx="55" ry="22" fill="rgba(255,255,255,0.7)" />
@@ -70,25 +71,18 @@ const PlaneBackground = () => (
       </div>
     ))}
 
-    {/* Airplane with banner */}
     <div className="plane-group">
       <svg width="90" height="40" viewBox="0 0 90 40" fill="none">
-        {/* Fuselage */}
         <ellipse cx="38" cy="20" rx="36" ry="10" fill="#e8eaf6" />
-        {/* Nose cone */}
         <ellipse cx="72" cy="20" rx="10" ry="7" fill="#c5cae9" />
         <path d="M82 20 Q90 20 88 22 L82 22 Z" fill="#9fa8da" />
-        {/* Tail fin */}
         <path d="M6 20 Q0 8 12 12 L18 20 Z" fill="#9fa8da" />
         <path d="M8 20 Q4 28 14 26 L18 20 Z" fill="#c5cae9" />
-        {/* Main wing */}
         <path d="M30 20 Q40 5 55 8 L50 20 Z" fill="#9fa8da" />
         <path d="M30 20 Q38 32 50 30 L50 20 Z" fill="#c5cae9" />
-        {/* Window */}
         <ellipse cx="52" cy="18" rx="5" ry="4" fill="#81d4fa" />
         <ellipse cx="38" cy="18" rx="5" ry="4" fill="#81d4fa" />
       </svg>
-      {/* Trailing banner */}
       <div
         className="banner"
         style={{
@@ -110,6 +104,6 @@ const PlaneBackground = () => (
       </div>
     </div>
   </>
-);
+)
 
-export default PlaneBackground;
+export default PlaneBackground
