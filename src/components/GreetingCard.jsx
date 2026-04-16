@@ -11,6 +11,8 @@ const GreetingCard = ({
     headingColor,
     messageColor,
     textShadow,
+    headingFontSize,
+    messageFontSize,
     ...restCardStyle
   } = cardStyle;
 
@@ -26,7 +28,7 @@ const GreetingCard = ({
   };
 
   const headingStyle = {
-    fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+    fontSize: headingFontSize || 'clamp(2rem, 6vw, 3.5rem)',
     fontFamily: 'Georgia, serif',
     margin: '0 0 16px',
     lineHeight: 1.2,
@@ -34,7 +36,7 @@ const GreetingCard = ({
   };
 
   const messageStyle = {
-    fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
+    fontSize: messageFontSize || 'clamp(1rem, 2.5vw, 1.3rem)',
     margin: 0,
     lineHeight: 1.7,
     color: messageColor || '#444',
