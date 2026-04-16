@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-const NAV_LINKS = [
+interface NavItem {
+  to: string
+  label: string
+  end?: boolean
+}
+
+const NAV_LINKS: NavItem[] = [
   { to: '/', label: '🎈 Balloons', end: true },
   { to: '/greeting2', label: '🎉 Confetti' },
   { to: '/greeting3', label: '🌅 Sunrise' },
@@ -10,7 +16,7 @@ const NAV_LINKS = [
   { to: '/greeting6', label: '🌃 City Lights' },
   { to: '/greeting7', label: '🎆 Fireworks' },
   { to: '/greeting8', label: '🐠 Ocean' },
-] as const
+]
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)

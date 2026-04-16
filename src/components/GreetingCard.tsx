@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 
-export interface GreetingCardStyle extends CSSProperties {
+export type GreetingCardStyle = Omit<CSSProperties, 'textShadow'> & {
   headingColor?: string
   messageColor?: string
   textShadow?: boolean
