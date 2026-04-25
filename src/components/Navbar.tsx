@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
-const NAV_LINKS = [
+interface NavItem {
+  to: string
+  label: string
+  end?: boolean
+}
+
+const NAV_LINKS: NavItem[] = [
   { to: '/', label: '🎈 Balloons', end: true },
   { to: '/greeting2', label: '🎉 Confetti' },
   { to: '/greeting3', label: '🌅 Sunrise' },
@@ -10,19 +16,18 @@ const NAV_LINKS = [
   { to: '/greeting6', label: '🌃 City Lights' },
   { to: '/greeting7', label: '🎆 Fireworks' },
   { to: '/greeting8', label: '🐠 Ocean' },
-];
+]
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  const linkClass = ({ isActive }) =>
-    `text-white no-underline font-bold p-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)] ${isActive ? 'text-[#646cff] border-b-2 border-[#646cff]' : ''}`;
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    `text-white no-underline font-bold p-2 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)] ${isActive ? 'text-[#646cff] border-b-2 border-[#646cff]' : ''}`
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-      {/* Desktop nav */}
       <ul className="hidden md:flex list-none p-4 m-0 justify-center gap-8">
         {NAV_LINKS.map(({ to, label, end }) => (
           <li key={to}>
@@ -33,7 +38,6 @@ const Navbar = () => {
         ))}
       </ul>
 
-      {/* Mobile hamburger button */}
       <div className="md:hidden flex justify-end p-4">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -55,7 +59,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile dropdown menu */}
       {menuOpen && (
         <ul className="md:hidden list-none p-0 m-0 flex flex-col items-end gap-2 px-4 pb-4">
           {NAV_LINKS.map(({ to, label, end }) => (
@@ -68,7 +71,7 @@ const Navbar = () => {
         </ul>
       )}
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

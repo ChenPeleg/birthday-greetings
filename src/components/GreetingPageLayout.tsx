@@ -1,12 +1,19 @@
-import React from 'react';
+import { CSSProperties, ComponentType, ReactNode } from 'react'
+
+interface GreetingPageLayoutProps {
+  BackgroundComponent?: ComponentType
+  backgroundGradient?: string | null
+  containerStyle?: CSSProperties
+  children: ReactNode
+}
 
 const GreetingPageLayout = ({
   BackgroundComponent,
   backgroundGradient = null,
   containerStyle = {},
-  children
-}) => {
-  const defaultContainerStyle = {
+  children,
+}: GreetingPageLayoutProps) => {
+  const finalContainerStyle: CSSProperties = {
     position: 'relative',
     width: '100%',
     minHeight: '100vh',
@@ -14,15 +21,11 @@ const GreetingPageLayout = ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  };
-
-  const finalContainerStyle = {
-    ...defaultContainerStyle,
     ...containerStyle,
-  };
+  }
 
   if (backgroundGradient) {
-    finalContainerStyle.background = backgroundGradient;
+    finalContainerStyle.background = backgroundGradient
   }
 
   return (
@@ -30,7 +33,7 @@ const GreetingPageLayout = ({
       {BackgroundComponent && <BackgroundComponent />}
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default GreetingPageLayout;
+export default GreetingPageLayout

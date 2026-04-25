@@ -1,13 +1,26 @@
-import BalloonBackground from '../components/BalloonBackground';
-import ConfettiCanvas from '../components/ConfettiCanvas';
-import SunriseBackground from '../components/SunriseBackground';
-import PlaneBackground from '../components/PlaneBackground';
-import CloudBackground from '../components/CloudBackground';
-import CityBackground from '../components/CityBackground';
-import FireworksCanvas from '../components/FireworksCanvas';
-import OceanCanvas from '../components/OceanCanvas';
+import { ComponentType } from 'react'
+import BalloonBackground from '../components/BalloonBackground'
+import CityBackground from '../components/CityBackground'
+import CloudBackground from '../components/CloudBackground'
+import ConfettiCanvas from '../components/ConfettiCanvas'
+import FireworksCanvas from '../components/FireworksCanvas'
+import OceanCanvas from '../components/OceanCanvas'
+import PlaneBackground from '../components/PlaneBackground'
+import SunriseBackground from '../components/SunriseBackground'
+import { GreetingCardStyle } from '../components/GreetingCard'
 
-export const greetingsConfig = [
+export interface GreetingConfig {
+  id: number
+  icon: string
+  heading: string
+  message: string
+  backgroundGradient: string | null
+  cardStyle: GreetingCardStyle
+  BackgroundComponent: ComponentType
+  containerClassName: string
+}
+
+export const greetingsConfig: GreetingConfig[] = [
   {
     id: 1,
     icon: '🎈',
@@ -163,4 +176,4 @@ export const greetingsConfig = [
     BackgroundComponent: OceanCanvas,
     containerClassName: 'ocean-card',
   },
-];
+]
